@@ -18,7 +18,7 @@ The basis of this 'best case' scenario used will be the
 All Party Parliamentary Cycling Groups' Get Britain Cycling report 
 (APPCG 2013). The APPCG report provides general guidance on what would
 be needed for a radical modal shift to active travel (including the 
-prerequisite of a minimum of £10 per head spent on cycling per year
+prerequisite of a minimum of 10 pounds per head spent on cycling per year
 and a target of 25% of all trips made by bike by 2050) but provides 
 little detail about the precise set of interventions that would make this 
 transition happen. This research project aims to provide a more 
@@ -27,7 +27,7 @@ detailed vision of what the UK's transport system would look like if
 estimation of which modes cycling would replace and a simulation of 
 the extent to which demand reduction would be required. 
 Analysis of the impact of past interventions informs estimation
-of the kinds of intervention needed; a comparison of the 2001 and 2011 Census  
+of the kinds of intervention needed; a comparison of the 2001 and 2011 Census
 provides insight into the places that would be likely to lead the transition 
 and likely 'lagard' areas in this transition. The conclusion 
 returns to the systemic problems facing civilisation and proposes a research 
