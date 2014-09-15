@@ -1,7 +1,8 @@
 ## analysis of the nts for % trips by bicycle over time
 # part of the DutchBikes research project - let's look at monthly responses
 
-ntstrips <- read.spss("/scratch/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12//trips.sav")
+# ntstrips <- read.spss("/scratch/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12//trips.sav")
+ntstrips <- read.spss("/media/SAMSUNG/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12//trips.sav")
 ntstrips <- data.frame(ntstrips)
 names(ntstrips)
 summary(ntstrips$TRAVDATE)
@@ -38,10 +39,11 @@ head(ntpm)
 ntpm <- cbind(ntpm, ntpm[3] / ntpm[2])
 head(ntpm)
 plot(ntpm[[1]], ntpm[[4]]) # no pattern - how dissapointing - now try per yr agg.
+dir.create("nts")
 write.csv(ntpm, "nts/ntpm.csv")
 
 # after adding edited data
-(ntpy <- read.csv("nts/ntpm-agg.csv", sep="\t"))
+(ntpy <- read.csv("nts/ntpm-ed.csv"))
 names(ntpy) <- c("Year", "Prop.cycle", "Source")
 qplot(data=ntpy, x=Year, y=Prop.cycle * 100, color = Source) + geom_smooth(fill=NA) +
   ylim(c(0,2)) + theme_bw() + ylab("Percentage of trips by bicycle") 
@@ -54,18 +56,16 @@ names(myColors) <- c("Current rate", "Needed rate", "10 yr doubling", "DfT's NTM
 colScale <- scale_colour_manual(name = "Model",values = myColors)
 
 # making hypothetical future data
-x <- 1:7
-y <- ntpy[14:20,2] * 100
+x <- 1:8
+y <- rev(as.numeric(ntpy[,5] * 100))
 df <- data.frame(cbind(x,y))
 lm1 <- lm(y ~ x, data=df)
-df2 <- data.frame(x= 2000:2500 -2004)
 df2 <- data.frame(x= 2000:2050 -2004)
 p1 <- predict(lm1, df2) # 1/2 way there by 2500 at current rate!
 df2050 <- data.frame(Year = 2000:2050, prop.cycle = p1, model = "Current rate" )
 dfneed <- data.frame(Year = 2000:2050, prop.cycle = c(p1[1:15], seq(1.7,25,length.out=36)), model = "Needed rate" )
 df2050 <- rbind(df2050, dfneed)
-qplot(data = df2050, x = Year, y = prop.cycle, color = model) + ylab("Percentage of trips by bicycle") +
-  theme_bw() + colScale
+qplot(data = df2050, x = Year, y = prop.cycle, color = model) + ylab("Percentage of trips by bicycle") +  theme_bw() + colScale
 dfneed[20,2] - dfneed[19,2] # rate of cycling need to grow by 0.67% points pa for next 35 years
 # ggsave("~/Dropbox/DutchBikes/figures/nts-time2050.png")
 
@@ -75,7 +75,7 @@ class(rw$Pedal.Cycle.Counts.Indexed)
 plot(1:nrow(rw), rw$Pedal.Cycle.Counts.Indexed)
 rw$Year <- seq(2000, 2014, length.out=nrow(rw))
 qplot(rw$Year, rw$Pedal.Cycle.Counts.Indexed) + geom_smooth(method=lm, fill = NA) +
-  scale_x_continuous(breaks = 2000:2014) + xlab("Year") + ylab("Cycle count index") + 
+  scale_x_continuous(breaks  = 2000:2014) + xlab("Year") + ylab("Cycle count index") + 
   theme_bw() 
 1.7 / 8
 1.7 * 8 # could hit 25% by 2050, just if it's exponential
@@ -105,7 +105,7 @@ dftntm <- data.frame(Year = 2010:2035, prop.cycle = seq(2.4, 2.04, length.out= 2
 df2050 <- rbind(df2050, dftntm)
 qplot(data = df2050, x = Year, y = prop.cycle, color = model) + ylab("Percentage of trips by bicycle") +
   theme_bw() + colScale
-ggsave("~/Dropbox/DutchBikes/figures/ntm-out.png")
+# ggsave("~/Dropbox/DutchBikes/figures/ntm-out.png")
 
 
 # the logistic growth model
@@ -118,6 +118,7 @@ plot(lgrowth)
 lgrowth <- data.frame(Year = time + 2015, prop.cycle = lgrowth, model = "Logistic")
 
 # redo colors, plot
+library(RColorBrewer)
 myColors <- c(brewer.pal(4,"Set1"), "black")
 names(myColors) <- c("Current rate", "Needed rate", "10 yr doubling", "DfT's NTM", "Logistic")
 colScale <- scale_colour_manual(name = "Model",values = myColors)
