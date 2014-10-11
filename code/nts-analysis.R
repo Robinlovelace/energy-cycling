@@ -2,13 +2,13 @@
 # part of the DutchBikes research project - let's look at monthly responses
 
 # ntstrips <- read.spss("/scratch/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12//trips.sav")
-ntstrips <- read.spss("/media/SAMSUNG/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12//trips.sav")
+ntstrips <- read.spss("/media/SAMSUNG/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12/trips.sav")
 ntstrips <- data.frame(ntstrips)
 names(ntstrips)
 summary(ntstrips$TRAVDATE)
 summary(ntstrips$j36a) / nrow(ntstrips) # 1.7 % trips made by bicycle nationwide 2002-2008
 summary(ntstrips$jdungross) # 8 mile = av. trip length
-summary(ntstrips$jdungross[which(ntstrips$j36a == "Bicycle")]) # 2.4 mile = average bike trip 
+summary(ntstrips$jdungross[which(ntstrips$j36a == "Bicycle")]) # 2.4 mile = average bike trip
 summary(ntstrips$jotxsc)
 
 # sorting months out

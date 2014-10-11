@@ -1,8 +1,15 @@
-### GORS-time
+# Generate outputs (% increase in cycling, reduction in car use) by gor per unit time
 summary(ssam$j58g)
 
-gssam <- ssam[ grep("Lon|York|North E|Scotl", ssam$j58g),]
+gssam <- ssam[ grep("Lon|York|North E|Scotl", ssam$j58g),] # select zones of interest
+library(dplyr)
+summarise(group_by(ssam, j58g), esave = sum(esave)) # the saving in each zone
 
+# Now generate for each point in time
+for(i in 2015:2050){}
+
+# visualisation
+library(ggplot2)
 ggplot(gssam[ gssam$sd < 300, ]) + geom_histogram(aes(x = sd/10, fill = mode)
   #   , stat = "density"
 ) +
@@ -30,12 +37,15 @@ ukgors gUnion(scotwales, gors)
 
 object.size(gors)
 gors <- gSimplify(gors, tol = 1000)
-save(gors, file = "~/Dropbox/basic-geodata/gors.RData")
+# save(gors, file = "~/Dropbox/basic-geodata/gors.RData")
+load("~/Dropbox/basic-geodata/gors.RData")
 plot(gors)
 
 
-# load("~/Dropbox/basic-geodata/GBR_adm2.RData")
+load("~/Dropbox/basic-geodata/GBR_adm2.RData")
 # library(rgeos)
 # gadm <- gSimplify(gadm, tol = 0.03)
 # object.size(gadm) / 1000000
-# plot(gadm)
+plot(gadm)
+head(gadm@data)
+summary(factor(gadm$NAME_2))

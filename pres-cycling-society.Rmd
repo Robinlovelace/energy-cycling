@@ -2,7 +2,7 @@
 title: "Modelling cycling rates to 2050"
 author: "Robin Lovelace"
 date: "15/09/2014"
-output: ioslides_presentation
+output: beamer_presentation
 ---
 
 ## What could happen if we get serious about cycling
@@ -89,7 +89,8 @@ to estimate monetary savings
 
 ```{r, echo=FALSE}
 # DfT scenario 
-s1 <- seq(0.017, 0.017 * 1.74, length.out = 11) # the sequence to 2025
+s1 <- seq(0.017, 0.017 * 1.793, length.out = 11) # the sequence to 2025 - CP
+# s1 <- seq(0.017, 0.017 * 1.083, length.out = 11) # the sequence to 2025 - PQ
 p.yr <- s1[2] - s1[1]
 dftend <- p.yr * 35 + 0.017
 sdft <- seq(0.017, dftend, length.out = 36) * 100
@@ -123,11 +124,15 @@ go_dutch <- dft
 go_dutch$Scenario <- "Go Dutch"
 go_dutch$Perc_stages <- lgrowth
 # plot(go_dutch$Year, go_dutch$Perc_stages)
+
+ecotech <- go_dutch
+ecotech$Scenario <- "Ecotechnic"
 ```
 
 ```{r, echo=FALSE}
-s2050 <- rbind(dft, slow_start, go_dutch)
-ggplot() + geom_vline(xintercept = c(2025, 2050), linetype = 3) + geom_hline(yintercept = c(10, 25), linetype = 2) + geom_line(data = s2050, aes(x = Year, y = Perc_stages, color = Scenario)) + ylab("Percentage of trips by bicycle") +  theme_bw() + scale_color_brewer(type = "qual", palette = 6, name = "Model") + scale_shape_discrete(name = "Data", solid = F) + geom_text(aes(2020, py, label = ptext), size = 4)
+s2050 <- rbind(dft, slow_start, go_dutch, ecotech)
+ggplot() + geom_vline(xintercept = c(2025, 2050), linetype = 3) + geom_hline(yintercept = c(10, 25), linetype = 2) + geom_line(data = s2050, aes(x = Year, y = Perc_stages, color = Scenario, linetype = Scenario)) + ylab("Percentage of trips by bicycle") +  theme_bw() + scale_color_brewer(type = "qual", palette = 6, name = "Model") + scale_shape_discrete(name = "Data", solid = F) + geom_text(aes(2020, py, label = ptext), size = 4) +
+  scale_linetype_manual(values = c(1,1,1,2), guide = "none")
 # ggsave("figures/stages.png")
 ```
 
@@ -187,7 +192,7 @@ constant
 all stages, commuting taking up disproportionate share of cycle trips:
 
 ```{r, echo=FALSE}
-ssam <- read.csv("~/Desktop/stages-sample.csv")
+ssam <- read.csv("~/Desktop/stages-sample.csv") # from
 ssam$mode <- as.character(ssam$s24a)
 ssam$mode[grep("Other|Tax|Moto|LT|Rail", ssam$s24a)] <- "Other"
 ssam$mode[grep("bus", ssam$s24a)] <- "Bus"
@@ -305,7 +310,6 @@ ssam$dswitch[sel] <- "Bicycle"
 
 ggplot(ssam[ ssam$sd < 300, ]) + geom_histogram(aes(x = sd/10, group = dswitch, fill = dswitch),) + scale_fill_brewer(type = "qual") + xlab("Miles") + stat_bin(aes(x = sd/10, y = ..density..)) # not density
 # ggplot(ssam[ ssam$sd < 300, ], aes(x = sd/10, group = dswitch, fill = dswitch)) + stat_bin(aes(x = sd/10, y = ..density..)) + scale_fill_brewer(type = "qual") + xlab("Miles") 
-```
 ```
 
 ## Comparing 'distance switch' with simplest scenario
@@ -488,6 +492,7 @@ ggplot(gssam[ gssam$sd < 300, ]) + geom_histogram(aes(x = sd/10, fill = mode)
 ## Energy savings by 2050
 
 ```{r, echo=FALSE, message=FALSE}
+
 # summary(ssam$mode)
 ssam$epkm <- 0
 ssam$epkm[ grep("driv", ssam$mode)  ] <- 3
@@ -519,8 +524,9 @@ eframe$Dswitch <- gorsum / tsum
 library(reshape2)
 eframe <- melt(eframe)
 names(eframe) <- c("Region", "Scenario", "Proportion")
-qplot(x = Region, y = Proportion, fill = Scenario, data = eframe, geom = "bar", position = "dodge") +
+qplot(x = Region, y = Proportion, fill = Scenario, data = eframe, geom = "bar", position = "dodge", stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+ggplot() + geom_point(aes(x = eframe$Region, y = eframe$Proportion))
   # energy savings 'distance switch = 2.7 * less than overall)
 
 # sum(ssam$epkm[sel_ds] * ssam$dkm[sel_ds]) / sum(ssam$epkm * ssam$dkm)
