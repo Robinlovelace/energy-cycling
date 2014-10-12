@@ -40,10 +40,12 @@ age_recat <- function(a){
 a2 <- age_recat(a)
 cbind(as.character(a),as.character(a2))
 
+iss$age <- age_recat(iss$age)
+
 # Percentage in each group
 length(which(iss$dist_cycle_go == 0)) / nrow(iss) # the overall percentage
 
-agecats <- data_frame(age = levels(iss$age), not_cycled = NA, mean_dis = NA, mean_dis_cyclists = NA, sd_dis_cyclists = NA, not_cycled_dft = NA, mean_dis_dft = NA, mean_dis_cyclists_dft = NA, sd_dis_cyclists_dft = NA, not_cycled_go_dutch = NA, mean_dis_go_dutch = NA, mean_dis_cyclists_go_dutch = NA, sd_dis_cyclists_go_dutch = NA)
+agecats <- data.frame(age = levels(iss$age), not_cycled = NA, mean_dis = NA, mean_dis_cyclists = NA, sd_dis_cyclists = NA, not_cycled_dft = NA, mean_dis_dft = NA, mean_dis_cyclists_dft = NA, sd_dis_cyclists_dft = NA, not_cycled_go_dutch = NA, mean_dis_go_dutch = NA, mean_dis_cyclists_go_dutch = NA, sd_dis_cyclists_go_dutch = NA)
 
 # run the calculations
 for(i in levels(iss$age)){
@@ -82,6 +84,13 @@ for(i in levels(iss_m$age)){
   sel2 <- sel[ iss_m$dist_cycle_dft [sel] > 0] # cyclists
   agecats$mean_dis_cyclists_dft[agecats$age == i] <- mean(iss_m$dist_cycle_dft[sel2])
   agecats$sd_dis_cyclists_dft[agecats$age == i] <- sd(iss_m$dist_cycle_dft[sel2])
+
+  agecats$not_cycled_go_dutch[agecats$age == i] <-
+    sum(iss_m$dist_cycle_go[sel] == 0) / length(sel)
+  agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss_m$dist_cycle_go[sel])
+  sel2 <- sel[ iss_m$dist_cycle_go_dutch [sel] > 0] # cyclists
+  agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss_m$dist_cycle_go[sel2])
+  agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss_m$dist_cycle_go[sel2])
 }
 
 agecats_m <- agecats
@@ -101,6 +110,13 @@ for(i in levels(iss_f$age)){
   sel2 <- sel[ iss_f$dist_cycle_dft [sel] > 0] # cyclists
   agecats$mean_dis_cyclists_dft[agecats$age == i] <- mean(iss_f$dist_cycle_dft[sel2])
   agecats$sd_dis_cyclists_dft[agecats$age == i] <- sd(iss_f$dist_cycle_dft[sel2])
+
+  agecats$not_cycled_go_dutch[agecats$age == i] <-
+    sum(iss_f$dist_cycle_go[sel] == 0) / length(sel)
+  agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss_f$dist_cycle_go[sel])
+  sel2 <- sel[ iss_f$dist_cycle_go_dutch [sel] > 0] # cyclists
+  agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss_f$dist_cycle_go[sel2])
+  agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss_f$dist_cycle_go[sel2])
 }
 
 agecats_f <- agecats
