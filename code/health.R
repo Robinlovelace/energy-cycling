@@ -3,44 +3,25 @@
 library(dplyr)
 tsam <- tsam[1:nrow(tsam),]
 individuals <- group_by(tsam, psuid, i1, house )
-indscen <- summarise(individuals, dist_cycle = sum(dcycle), dist_cycle_dft = sum(dcycle_2025_dft), dist_cycle_go = sum(dcycle_2025_go)) # the saving per person
+indscen <- summarise(individuals, GOR = commonest(region), dist_cycle = sum(dcycle), dist_cycle_dft = sum(dcycle_2025_dft), dist_cycle_go = sum(dcycle_2025_go)) # the saving per person
+
+# Look at individual GORS
+indscen$GOR <- factor(indscen$GOR)
+summary(indscen$GOR)
+indscen <- indscen[ !indscen$GOR == "Scotland", ] # may be superfluous...
 
 summary(indscen)
 summary(indscen$dist_cycle)
 summary(indscen$dist_cycle_go)
 summary(indscen$dist_cycle[ indscen$dist_cycle > 0])
-indscen_all <- inner_join(ind, indscen) # join other attributes to individ. data
-iss <- indscen_all[4000:5000,]
 
-write.csv(inscen_subset, "~/Dropbox/energy_saving.csv")
-summary(indscen_all[4000:5000,])
+indscen_all <- inner_join(indscen, ind) # join other attributes to individ. data
+indscen_all$age <- age_recat(indscen_all$age)
+# iss <- indscen_all[4000:5000,] # test run
+iss <- indscen_all
 
-# The number of people who never cycle
-
-# Recategorise to fit model
-age_recat <- function(a){
-    a2 <- factor(rep(NA, length(a)), levels = c("0-14", "15-29", "30-44", "45-59", "60-69", "70-79", "80+"))
-    a2[a == "0 - 4 years" | a == "5 - 10 years" | a == "11 - 15 years"] <- "0-14"
-    a2[a == "16 - 19 years" | a == "20 - 29 years"] <- "15-29"
-    a2[a == "30 - 39 years" ] <- "30-44"
-    f40_t49 <- which(a == "40 - 49 years") # we need to split this variable in two
-    o30_44 <- sample(f40_t49, size = length(f40_t49) / 2)
-    o45_59 <- f40_t49[!f40_t49 %in% o30_44]
-    a2[o30_44] <- "30-44"
-    a2[o45_59] <- "45-59"
-    a2[a == "50 - 59 years" ] <- "45-59"
-    a2[a == "60 - 69 years" ] <- "60-69"
-    a2[a == "70 + years" ] <- "70-79" # all people over 70...
-    over70 <- which(a == "70 + years")
-    over80 <- sample(over70, size = (length(over70) * 0.397))
-    a2[over80] <- "80+" # all people over 70...
-  a2
-}
-
-a2 <- age_recat(a)
-cbind(as.character(a),as.character(a2))
-
-iss$age <- age_recat(iss$age)
+# write.csv(iss, "~/Dropbox/energy_saving.csv")
+summary(iss)
 
 # Percentage in each group
 length(which(iss$dist_cycle_go == 0)) / nrow(iss) # the overall percentage
@@ -88,7 +69,7 @@ for(i in levels(iss_m$age)){
   agecats$not_cycled_go_dutch[agecats$age == i] <-
     sum(iss_m$dist_cycle_go[sel] == 0) / length(sel)
   agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss_m$dist_cycle_go[sel])
-  sel2 <- sel[ iss_m$dist_cycle_go_dutch [sel] > 0] # cyclists
+  sel2 <- sel[ iss_m$dist_cycle_go [sel] > 0] # cyclists
   agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss_m$dist_cycle_go[sel2])
   agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss_m$dist_cycle_go[sel2])
 }
@@ -114,7 +95,7 @@ for(i in levels(iss_f$age)){
   agecats$not_cycled_go_dutch[agecats$age == i] <-
     sum(iss_f$dist_cycle_go[sel] == 0) / length(sel)
   agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss_f$dist_cycle_go[sel])
-  sel2 <- sel[ iss_f$dist_cycle_go_dutch [sel] > 0] # cyclists
+  sel2 <- sel[ iss_f$dist_cycle_go[sel] > 0] # cyclists
   agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss_f$dist_cycle_go[sel2])
   agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss_f$dist_cycle_go[sel2])
 }
@@ -125,6 +106,10 @@ names(agecats_f)[-1] <- fnames
 agecats <- cbind(agecats_m, agecats_f[-1])
 
 agecats
-write.csv(agecats, file = "/tmp/age_cats.csv")
+write.csv(agecats, file = "/tmp/age_cats_final_2025.csv")
+agecats_old <- read.csv("/tmp/age_cats.csv")
+
+cbind(as.character(agecats$age), agecats$not_cycled_go_dutch_m - agecats_old$not_cycled_go_dutch_m)
 
 summarise(individuals, never_cycled = n()) # the saving per person
+

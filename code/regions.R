@@ -1,8 +1,28 @@
 # Generate outputs (% increase in cycling, reduction in car use) by gor per unit time
-summary(ssam$j58g)
+
+summary(tsam$region)
+tsam$region <- factor(tsam$region) # remove superfluous factor levels
+levels(tsam$region)
+
+region <- data.frame(GOR = levels(tsam$region), nts_pop = as.numeric(summary(tsam$region)), rate_current = NA, rate_2025_dft = NA, rate_go_2025 = NA)
+
+library(dplyr)
+byGOR <- group_by(tsam, region)
+summarise(byGOR, rate = sum(mode == "Bicycle") / n()) # much much faster
+names(tsam)
+summarise(byGOR, rate = sum(dswitch_2025_dft == "Bicycle") / n()) # strange - London still lagging
+summarise(byGOR, rate = mean(dkm))
+
+
+
+aggregate(mode ~ region, FUN = function(x) sum(x == "Bicycle") /  length(x), data = tsam)
+
+for(i in 1:nrow(region)){
+ region$rate_current <-
+}
+
 
 gssam <- ssam[ grep("Lon|York|North E|Scotl", ssam$j58g),] # select zones of interest
-library(dplyr)
 summarise(group_by(ssam, j58g), esave = sum(esave)) # the saving in each zone
 
 # Now generate for each point in time

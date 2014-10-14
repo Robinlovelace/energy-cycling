@@ -1,0 +1,133 @@
+---
+title: "Modelling uptake of cycling and its associated savings"
+author: "Robin Lovelace and James Woodcock"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 6
+---
+
+Get Britain Cycling (GBC) set out specific targets for the rate of cycling by 2025 and 2050 in the UK of 10% and 25% respectively, and recommends measures (primarily at least £10 per person per year spent on cycling) to get there.
+
+This briefing document serves a different purpose: to explore what a transport system would look like if the GBC scenarios for 2050 are met and estimate the likely benefits of such a shift.
+
+## The scenarios
+
+The scenarios presented in this report are all based on the assumption of future growth in the rate of cycling. Starting in 2015, linear growth in the proportion of trips made by bicycle would result in the 2025 target being narrowly missed. Future projections in which the 10% target is acheived by 2025 would be possible, but this would require heavy 'front loading' of investment in cycling and are not included in the scenarios for this report. In figure 1 below, 3 future projections of increased uptake are provided:
+
+- **DfT**: 80% increase in the cycling rate by 2025, with this linear rate of growth (0.135 percentage points per year) extrapolated until 2050.
+- **Slow start**: The same as the DfT scenario until 2025, after which substantial investment begins in cycling, allowing bicycle trips to account for 22.1% of trips by 2050.
+- **Go Dutch**: A scenario in which the rate of cycling reaches 25% of trips by 2050 by following a logistic growth function.
+
+```{r, echo=FALSE}
+# - **Exponential growth** in cycling, with the proportion doubling every decade. This scenario, included for illustrative purposes, fails to meet either target and is unrealistic in its acceleration as the cycling rate grows.
+# - **Linear growth** in which the rate of cycling uptake is constant over time, at a rate of 0.67 percentage points per year, meeting the 2050 target and reaching 8.4% of trips by bicycle by 2025.
+# - **Logistic growth** in which the cycling rate increases at an initially slow rate, accelerates as cycling is normalised as a mode of travel' and levels off towards Dutch levels by 2050.
+# 
+# Of these scenarios the **logistic** model is deemed most realistic. None are predictions of the future, they are simplistic modelling tools used to envision how a future that diverges from past trends could look.^[See the Department of Energy and Climate Change, which has produced the *UK 2050 calculator* to allow users to envision the UK's energy system to 2050: http://2050-calculator-tool.decc.gov.uk ] Data points plotted in figure 1 represent historical data from the National Travel Survey (NTS) and Transport for London, which monitor the rate of cycling for all purposes accross the UK and in London. The latter dataset shows that rapid rises in cycling are possible if the right measures are introduced. The final and least likely scenario of the future is the provided by the 2012 National Transport Model (NTM), which projected the number of bicycle trips per person to peak by 2015.^[Mr Goodwill revealed these figures during Parliamentary questions on Thursday 31 October 2013: http://www.publications.parliament.uk/pa/cm201314/cmhansrd/cm131031/text/131031w0001.htm ]
+
+# Taking logistic growth as the most realistic scenario of rapid cycling uptake and adding the DfT's scenario of an 80% increase in the proportion of stages by bicycle,^[Trips --- one way journeys from location A to B are used as the basis of projections in this report, for simplicity. 96% of trips recorded in the National Travel Survey contained only a single stage so, for the purposes of modelling future cycling uptake, trips are deemed a sufficient level of analysis.] we arrive at the scenarios plotted in figure 2.
+```
+
+```{r scens1, echo=FALSE, fig.cap="Get Britain Cycling (GBC) targets and future projections.", fig.width=6, fig.height=3}
+library(ggplot2)
+library(grid)
+library(png)
+# load("df2050.Rdata")
+# ggplot() + geom_vline(xintercept = c(2025, 2050), linetype = 3) + geom_hline(yintercept = c(10, 25), linetype = 2) + geom_line(data = dfline, aes(x = Year, y = prop.cycle, color = model)) + geom_point(data = dfdots, aes(x = Year, y = prop.cycle, shape = model)) + ylab("Percentage of trips by bicycle") +  theme_bw() + scale_color_brewer(type = "qual", palette = 6, name = "Model") + scale_shape_discrete(name = "Data", solid = F) + geom_text(aes(px, py, label = ptext), size = 4)
+```
+
+```{r, echo=FALSE}
+# DfT scenario 
+s1 <- seq(0.017, 0.017 * 1.793, length.out = 11) # the sequence to 2025 - CP
+# s1 <- seq(0.017, 0.017 * 1.083, length.out = 11) # the sequence to 2025 - PQ
+p.yr <- s1[2] - s1[1]
+dftend <- p.yr * 35 + 0.017
+sdft <- seq(0.017, dftend, length.out = 36) * 100
+
+dft <- data.frame(Year = 2015:2050, Perc_stages = sdft, Scenario = "DfT")
+```
+
+```{r, echo=FALSE}
+# slow start
+k = 26
+B = sdft[11] 
+r = 0.15
+time = 0:25
+lgrowth <- (B * k * exp(r * time)) / (k + B * (exp( r * time) - 1) ) 
+# plot(lgrowth)
+slow_start <- dft
+slow_start$Scenario <- "Slow start"
+slow_start$Perc_stages[11:36] <- lgrowth 
+# plot(slow_start$Year, slow_start$Perc_stages)
+```
+
+```{r, echo=FALSE}
+# Go Dutch scenario
+k = 27
+B = 1.7
+r = 0.15
+time = 0:35
+lgrowth <- (B * k * exp(r * time)) / (k + B * (exp( r * time) - 1) ) 
+# plot(lgrowth)
+go_dutch <- dft
+go_dutch$Scenario <- "Go Dutch"
+go_dutch$Perc_stages <- lgrowth
+# plot(go_dutch$Year, go_dutch$Perc_stages)
+
+ecotech <- go_dutch
+ecotech$Scenario <- "Ecotechnic"
+```
+
+```{r, echo=FALSE, fig.cap="Scenarios of future scenarios for cycling in the UK"}
+s2050 <- rbind(dft, slow_start, go_dutch)
+ggplot() + geom_vline(xintercept = c(2025, 2050), linetype = 3) + geom_hline(yintercept = c(10, 25), linetype = 2) + geom_line(data = s2050, aes(x = Year, y = Perc_stages, color = Scenario, linetype = Scenario)) + ylab("Percentage of trips by bicycle") +  theme_bw() + scale_color_brewer(type = "qual", palette = 6, name = "Model") + scale_shape_discrete(name = "Data", solid = F) + geom_text(aes(2020, py, label = ptext), size = 4) +
+  scale_linetype_manual(values = c(1,1,1,2), guide = "none") 
+# ggsave("figures/stages.png")
+```
+
+Visualising these trend-lines helps understand the range of future possibilities that are available and allows yearly assessments of whether we are on track to meet the targets. However, to evaluate the benefits of cycling, through reduced fuel use, pollution, car crashes and improved health, an individual level model is needed. An individual-level model can project not only the overall cycling rate, but also its distribution across different groups of people and local authorities. Critically, an individual-level model can also be used to estimate increases in physical activity and the modes of transport that bicycle trips will replace.
+
+## Modelling cycling uptake to 2050
+
+To investigate the impacts of a dramatic shift to cycling, the National Travel Survey (NTS) was used as a foundation. The NTS provides data on current travel patterns and that the majority (two thirds, 67%) of trips made in the UK are for short journeys (less than 5 miles) and that mode of travel is closely related to distance, especially for active travel modes. Unsurprisingly, almost all walking and cycling trips are less than 10 miles, as illustrated in figure 2. The fact that bicycle trips can only realistically replace short trips was used identify trips that would be likely to be replaced by bicycle. 
+
+```{r, echo=FALSE, message=FALSE, fig.cap="Current number of trips by mode and distance from the National Travel Survey"}
+ggplot(ssam[ ssam$sd < 300, ]) + geom_histogram(aes(x = sd/10, fill = mode)) + scale_fill_brewer(type = "qual") + xlab("Miles") + ylab("Number of trips")
+```
+
+## Model assumptions
+
+The model assumes that the number and distance of trips remain constant over time. Demand reduction measures such as congestion charging and the localisation of economic activity to encourage shorter trips will make it easier to meet the GBC targets. Central to the model is the assignment of probabilities to each trip from the NTS.
+
+After filtering out Wales and Scotland, the number of trips used in the model was 1,835,064 allocated to 111,855 individuals: an average of 16 trips per person. Each trip was allocated a probability of switching to bicycle based on the following criteria:
+
+1. Distance: an exponential distance decay function was taken from Iacono et al (2010). This means that a trip of 1 km in distance is twice as likely to replaced by bike in the model than a trip of 5 km. A trip of 10 km is 6 times less likely to be replaced.
+
+2. Age and inability to cycle: cycling is a mode of travel that is accessible to most people in all sociodemographic groups. However, some people cannot physically cycle. To account for this in the model, the probability of trips made by elderly people being replaced by bike was reduced by a third, a half and 80% for age groups 60-69, 70-79 and 80+, respectively.
+
+3. Mode: we assumed that walking trips, which already make up more than 1/3 of
+trips under 1 km in the NTS, are not replaced by bicycle trips. This
+is the same as assuming that any walking trips replaced by additional cycle trips
+are offset by an increase in walking: we assume high rates of active travel overall.
+
+```{r, echo=FALSE, eval=FALSE}
+summary(tsam$mode[ tsam$dkm < 1]) / nrow(tsam[ tsam$dkm < 1,])
+```
+
+The type of trips replaced by bicycle in the model is shown in figure 3. When only distance is considered, it is clear that fewer car trips are replaced than would be expected from the current modal split. whereas bicycle trip disproportionately replace walking alone. This is policy-dependent: policies that simultaneously promote cycling and walking or target car drivers will ensure that proportionately more car trips are replaced.
+
+```{r perc_replaced, fig.cap="Mode of trips replaced by additional bicycle trips in each scenario by 2025", echo=FALSE}
+grid.raster(readPNG("figures/perc_replaced.png"))
+```
+
+## Health savings
+
+It is widely acknowledged that health is the single largest short-term economic benefit of cycling...
+
+## Conclusion
+
+## References
+
+

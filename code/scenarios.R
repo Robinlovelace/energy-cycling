@@ -7,7 +7,7 @@ s1 <- seq(0.017, 0.017 * 1.793, length.out = 11) # the sequence to 2025 - CP
 # s1 <- seq(0.017, 0.017 * 1.083, length.out = 11) # the sequence to 2025 - PQ
 p.yr <- s1[2] - s1[1]
 dftend <- p.yr * 35 + 0.017
-sdft <- seq(0.017, dftend, length.out = 36) * 100
+sdft <- seq(0.017, dftend, length.out = 36) * 100 # continuation of dft scen. to 2050
 dft <- data.frame(Year = 2015:2050, Perc_stages = sdft, Scenario = "DfT")
 
 # Slow start
@@ -73,24 +73,39 @@ iac <- function(x, a, b){
 pswitch <- iac(tsam$dkm, a = 0.3, b = 0.2)
 pswitch[ tsam$mode == "Bicycle"] <- 0 # probability of switch for cyclists = 0
 # plot(pswitch, tsam$dkm)
+
+# Add age to pswitch
+library(dplyr)
+tsam <- inner_join(tsam, ind,  by = c("psuid", "house", "i1") )
+tsam$mode <- tsam$mode.x
+tsam$mode.x <- NULL
+
+tsam$age <- age_recat(tsam$age)
+
+# Stage 2: implement on categories (don't have exact ages)
+age_prob <- rep(1, length(tsam$age))
+age_prob[tsam$age == "70-79"] <- 0.5
+age_prob[tsam$age == "80+"] <- 0.2
+pswitch <- pswitch * age_prob
+
 set.seed(100)
 size = length(which(tsam$mode == "Bicycle")) # the number of people who will switch mode
 
 # Change in the cycling rate
 # Rate of cycling in future - DfT scenario - baseline
-size2025dft <- nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "DfT" & s2050$Year == 2025] / 100 -
-  nrow(tsam) * 0.017 #
+size2025dft <- nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "DfT" & s2050$Year == 2025] / 100 - nrow(tsam) * 0.017 #
 
 # The go Dutch scenario
-size2025godutch =  nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "Go Dutch" & s2050$Year == 2025] / 100 -
-  nrow(tsam) * 0.017
+size2025godutch <-  nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "Go Dutch" & s2050$Year == 2025] / 100 - nrow(tsam) * 0.017
 
+set.seed(100)
 sel <- sample(nrow(tsam), size = size2025dft, prob = pswitch)
 tsam$dswitch_2025_dft <- tsam$mode
 tsam$dswitch_2025_dft[sel] <- "Bicycle"
 
+set.seed(100) # use same set of probabilities - same people susceptible to switch
 sel <- sample(nrow(tsam), size = size2025godutch, prob = pswitch)
-tsam$dswitch_2025_go <- tsam$mode
+tsam$dswitch_2025_go <- tsam$dswitch_2025_dft
 tsam$dswitch_2025_go[sel] <- "Bicycle"
 
 # Savings / changes
@@ -108,13 +123,24 @@ tsam$dcycle_2025_go[ tsam$dswitch_2025_go == "Bicycle"] <- tsam$dkm[ tsam$dswitc
 
 summary(tsam[c("dcycle_2025_go", "dcycle_2025_dft", "dcycle")])
 names(tsam)
-# Increase from current
-# tsam$dcycleNew[sel] <- tsam$dkm[sel]
-# tsam$dcycleNew[tsam$mode == "Walk"] <- 0
 
-# Increase from future baseline
-# future_shift
+# Which modes are replaced?
+replacement_2025_dft <- summary(tsam$mode[tsam$mode != "Bicycle" & tsam$dswitch_2025_dft == "Bicycle"]) /
+  length(tsam$mode[tsam$mode != "Bicycle" & tsam$dswitch_2025_dft == "Bicycle"])
+replacement_2025_go <- summary(tsam$mode[tsam$mode != "Bicycle" & tsam$dswitch_2025_go == "Bicycle"]) /
+  length(tsam$mode[tsam$mode != "Bicycle" & tsam$dswitch_2025_go == "Bicycle"])
 
+replacement <- rbind(DfT = replacement_2025_dft, Go_Dutch = replacement_2025_go, Current = summary(tsam$mode) / nrow(tsam))
+library(reshape2)
+replacement <- melt(replacement)
+head(replacement)
+names(replacement) <- c("Scenario", "Mode", "Percentage")
+replacement$Percentage <- replacement$Percentage * 100
+qplot(x = Mode, y = Percentage, fill = Scenario, data = replacement, geom = "bar", stat = "identity", position = "dodge") + theme_classic() + theme(axis.text.x = element_text(angle = 10))
+ggsave("figures/perc_replaced.png")
++ ylab("% of modes replaced by bicycle")
+
+summary(tsam$mode)
 # Estimates of energy savings
 tsam$epkm <- 0
 tsam$epkm[ grep("driv", tsam$mode)  ] <- 3
