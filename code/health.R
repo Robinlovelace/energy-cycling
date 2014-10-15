@@ -3,7 +3,7 @@
 library(dplyr)
 tsam <- tsam[1:nrow(tsam),]
 individuals <- group_by(tsam, psuid, i1, house )
-indscen <- summarise(individuals, GOR = commonest(region), dist_cycle = sum(dcycle), dist_cycle_dft = sum(dcycle_2025_dft), dist_cycle_go = sum(dcycle_2025_go)) # the saving per person
+indscen <- summarise(individuals, GOR = commonest(region), dist_cycle = sum(dcycle), dist_cycle_go = sum(dcycle_2025_go), dist_cycle_go_2050 = sum(dcycle_2050_go)) # the saving per person
 
 # Look at individual GORS
 indscen$GOR <- factor(indscen$GOR)
@@ -26,7 +26,7 @@ summary(iss)
 # Percentage in each group
 length(which(iss$dist_cycle_go == 0)) / nrow(iss) # the overall percentage
 
-agecats <- data.frame(age = levels(iss$age), not_cycled = NA, mean_dis = NA, mean_dis_cyclists = NA, sd_dis_cyclists = NA, not_cycled_dft = NA, mean_dis_dft = NA, mean_dis_cyclists_dft = NA, sd_dis_cyclists_dft = NA, not_cycled_go_dutch = NA, mean_dis_go_dutch = NA, mean_dis_cyclists_go_dutch = NA, sd_dis_cyclists_go_dutch = NA)
+agecats <- data.frame(age = levels(iss$age), not_cycled = NA, mean_dis = NA, mean_dis_cyclists = NA, sd_dis_cyclists = NA, not_cycled_go_dutch = NA, mean_dis_go_dutch = NA, mean_dis_cyclists_go_dutch = NA, sd_dis_cyclists_go_dutch = NA, not_cycled_go_dutch_2050 = NA, mean_dis_go_dutch_2050 = NA, mean_dis_cyclists_go_dutch_2050 = NA, sd_dis_cyclists_go_dutch_2050 = NA)
 
 # run the calculations
 for(i in levels(iss$age)){
@@ -37,11 +37,18 @@ for(i in levels(iss$age)){
   agecats$mean_dis_cyclists[agecats$age == i] <- mean(iss$dist_cycle[sel2])
   agecats$sd_dis_cyclists[agecats$age == i] <- sd(iss$dist_cycle[sel2])
 
-  agecats$not_cycled_dft[agecats$age == i] <- sum(iss$dist_cycle_dft[sel] == 0) / length(sel)
-  agecats$mean_dis_dft[agecats$age == i] <- mean(iss$dist_cycle_dft[sel])
-  sel2 <- sel[ iss$dist_cycle_dft [sel] > 0] # cyclists
-  agecats$mean_dis_cyclists_dft[agecats$age == i] <- mean(iss$dist_cycle_dft[sel2])
-  agecats$sd_dis_cyclists_dft[agecats$age == i] <- sd(iss$dist_cycle_dft[sel2])
+  agecats$not_cycled_go_dutch[agecats$age == i] <-
+    sum(iss$dist_cycle_go[sel] == 0) / length(sel)
+  agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss$dist_cycle_go[sel])
+  sel2 <- sel[ iss$dist_cycle_go [sel] > 0] # cyclists
+  agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss$dist_cycle_go[sel2])
+  agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss$dist_cycle_go[sel2])
+
+  agecats$not_cycled_go_dutch_2050[agecats$age == i] <- sum(iss$dist_cycle_go_2050[sel] == 0) / length(sel)
+  agecats$mean_dis_go_dutch_2050[agecats$age == i] <- mean(iss$dist_cycle_go_2050[sel])
+  sel2 <- sel[ iss$dist_cycle_go_2050 [sel] > 0] # cyclists
+  agecats$mean_dis_cyclists_go_dutch_2050[agecats$age == i] <- mean(iss$dist_cycle_go_2050[sel2])
+  agecats$sd_dis_cyclists_go_dutch_2050[agecats$age == i] <- sd(iss$dist_cycle_go_2050[sel2])
 }
 
 # Add gender, first with names
@@ -60,18 +67,18 @@ for(i in levels(iss_m$age)){
   agecats$mean_dis_cyclists[agecats$age == i] <- mean(iss_m$dist_cycle[sel2])
   agecats$sd_dis_cyclists[agecats$age == i] <- sd(iss_m$dist_cycle[sel2])
 
-  agecats$not_cycled_dft[agecats$age == i] <- sum(iss_m$dist_cycle_dft[sel] == 0) / length(sel)
-  agecats$mean_dis_dft[agecats$age == i] <- mean(iss_m$dist_cycle_dft[sel])
-  sel2 <- sel[ iss_m$dist_cycle_dft [sel] > 0] # cyclists
-  agecats$mean_dis_cyclists_dft[agecats$age == i] <- mean(iss_m$dist_cycle_dft[sel2])
-  agecats$sd_dis_cyclists_dft[agecats$age == i] <- sd(iss_m$dist_cycle_dft[sel2])
-
   agecats$not_cycled_go_dutch[agecats$age == i] <-
     sum(iss_m$dist_cycle_go[sel] == 0) / length(sel)
   agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss_m$dist_cycle_go[sel])
   sel2 <- sel[ iss_m$dist_cycle_go [sel] > 0] # cyclists
   agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss_m$dist_cycle_go[sel2])
   agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss_m$dist_cycle_go[sel2])
+
+  agecats$not_cycled_go_dutch_2050[agecats$age == i] <- sum(iss_m$dist_cycle_go_2050[sel] == 0) / length(sel)
+  agecats$mean_dis_go_dutch_2050[agecats$age == i] <- mean(iss_m$dist_cycle_go_2050[sel])
+  sel2 <- sel[ iss_m$dist_cycle_go_2050 [sel] > 0] # cyclists
+  agecats$mean_dis_cyclists_go_dutch_2050[agecats$age == i] <- mean(iss_m$dist_cycle_go_2050[sel2])
+  agecats$sd_dis_cyclists_go_dutch_2050[agecats$age == i] <- sd(iss_m$dist_cycle_go_2050[sel2])
 }
 
 agecats_m <- agecats
@@ -86,18 +93,18 @@ for(i in levels(iss_f$age)){
   agecats$mean_dis_cyclists[agecats$age == i] <- mean(iss_f$dist_cycle[sel2])
   agecats$sd_dis_cyclists[agecats$age == i] <- sd(iss_f$dist_cycle[sel2])
 
-  agecats$not_cycled_dft[agecats$age == i] <- sum(iss_f$dist_cycle_dft[sel] == 0) / length(sel)
-  agecats$mean_dis_dft[agecats$age == i] <- mean(iss_f$dist_cycle_dft[sel])
-  sel2 <- sel[ iss_f$dist_cycle_dft [sel] > 0] # cyclists
-  agecats$mean_dis_cyclists_dft[agecats$age == i] <- mean(iss_f$dist_cycle_dft[sel2])
-  agecats$sd_dis_cyclists_dft[agecats$age == i] <- sd(iss_f$dist_cycle_dft[sel2])
-
   agecats$not_cycled_go_dutch[agecats$age == i] <-
     sum(iss_f$dist_cycle_go[sel] == 0) / length(sel)
   agecats$mean_dis_go_dutch[agecats$age == i] <- mean(iss_f$dist_cycle_go[sel])
   sel2 <- sel[ iss_f$dist_cycle_go[sel] > 0] # cyclists
   agecats$mean_dis_cyclists_go_dutch[agecats$age == i] <- mean(iss_f$dist_cycle_go[sel2])
   agecats$sd_dis_cyclists_go_dutch[agecats$age == i] <- sd(iss_f$dist_cycle_go[sel2])
+
+  agecats$not_cycled_go_dutch_2050[agecats$age == i] <- sum(iss_f$dist_cycle_go_2050[sel] == 0) / length(sel)
+  agecats$mean_dis_go_dutch_2050[agecats$age == i] <- mean(iss_f$dist_cycle_go_2050[sel])
+  sel2 <- sel[ iss_f$dist_cycle_go_2050 [sel] > 0] # cyclists
+  agecats$mean_dis_cyclists_go_dutch_2050[agecats$age == i] <- mean(iss_f$dist_cycle_go_2050[sel2])
+  agecats$sd_dis_cyclists_go_dutch_2050[agecats$age == i] <- sd(iss_f$dist_cycle_go_2050[sel2])
 }
 
 agecats_f <- agecats
@@ -106,8 +113,19 @@ names(agecats_f)[-1] <- fnames
 agecats <- cbind(agecats_m, agecats_f[-1])
 
 agecats
-write.csv(agecats, file = "/tmp/age_cats_final_2025.csv")
-agecats_old <- read.csv("/tmp/age_cats.csv")
+write.csv(agecats, file = "/tmp/age_cats_final_age_notall.csv")
+
+
+
+
+
+
+
+
+
+agecats_old <- read.csv("/tmp/age_cats_final_2025.csv")
+
+agecats_old$not_cycled_go_dutch_m - agecats$not_cycled_go_dutch_m
 
 cbind(as.character(agecats$age), agecats$not_cycled_go_dutch_m - agecats_old$not_cycled_go_dutch_m)
 
