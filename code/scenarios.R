@@ -95,6 +95,7 @@ age_prob[tsam$age == "80+"] <- 0.2
 pswitch <- pswitch * age_prob
 
 # Stage 3: identify those who will never cycle
+# TfL did surveys to see who cannot cycle=
 names(tsam)
 tsam$individual <- paste0(paste0(tsam$psuid, tsam$house), tsam$i1)
 nrow(tsam) / length(unique(tsam$individual))
@@ -114,7 +115,7 @@ size = length(which(tsam$mode == "Bicycle")) # the number of people who will swi
 # Rate of cycling in future - DfT scenario - baseline
 size2025dft <- nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "DfT (NTM)" & s2050$Year == 2025] / 100 - nrow(tsam) * 0.017 #
 
-# The go Dutch scenario
+# The go Dutch scenario # takes a few min to run on fast 'puter!
 size2025godutch <-  nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "Go Dutch" & s2050$Year == 2025] / 100 - nrow(tsam) * 0.017
 size2050godutch <-  nrow(tsam) * s2050$Perc_stages[s2050$Scenario == "Go Dutch" & s2050$Year == 2050] / 100 - nrow(tsam) * 0.017
 
