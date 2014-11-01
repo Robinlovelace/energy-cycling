@@ -1,0 +1,47 @@
+---
+title: "The benefits of getting England cycling"
+author: "Fiona Crawford and Robin Lovelace"
+date: "11/01/2014"
+output: pdf_document
+bibliography: /home/robin/Documents/Transport.bib
+cls: /home/robin/Dropbox/Templates/citation-styles/elsevier-harvard.csl"
+---
+
+# Abstract
+
+
+
+# Introduction
+
+There is a growing body of evidence about the benefits of cycling. Human, environmental and economic health stand to benefit if more people choose to cycle for everyday transport. There is also recent evidence about the social and psychological benefits of regular excersise and being outside. Clearly such research can help inform policy at the national level: the measure selected to prot cycling and the scale and allocation of investment should build on a broad evidence base.
+Yet the majority of evidence on the effects of cycling operate at the local level, based on generally relatively small and localised samples, longitudinal studies and natural experiements.
+This report aims to 'scale up' the understanding gleaned from this rapid growing evidence base, to assess the likely impacts of a high cycling scenario in England.
+
+Compared with other advanced economies, English cycling aspirations are low. While Scotland has set an ambitious target of 10% of trips to be made by bicycle in just 5 years, by 2020,^["By 2020,
+10% of all journeys taken in Scotland will be
+by bike" was the 'vision' set in the Cycling Action Plan for Scotland in 2010: http://www.scotland.gov.uk/resource/doc/316212/0100657.pdf . Since then campaigners have argued the target will not be met unless more funding is provided [@Horton2013]. ] 
+the Department for Transport has projected cycling to stagnate in its National Transport Model (NTM) [@Pank2013]. The recommendation of the All Party Parliamentary Cycling Group (APPCG) for a minimum of £10 per head to be invested in cycling [@goodwin2013get] has yet to materialise.
+
+The recently released draft Walking and Cycling Delivery Plan^[See https://www.gov.uk/government/consultations/cycling-delivery-plan-informal-consultation] sets out a more optimistic vision of cycling in England. Its target is to double the *absolute number* of bicycle stages by 2025, roughly equivalent to an 80% increase the *proportion* of transport trips made by cycling. The baseline figure for this target is the 2013 National Travel Survey, which recorded the lowest rate of cycling in Britain in its history: 15.3 stages per person per year, or 1.5% of stages [TODO: figure here???].^[See the National Travel Survey's table 'NTS0304': https://www.gov.uk/government/statistical-data-sets/nts03-modal-comparisons ] Thus the Cycling and Walking Delivery plan is for the cycling rate to constitute less than 3% of trips by 2025, far short of the APPCG recommendations.  
+
+The purpose of this report is to compare the benefits of the DfT's proposed cycling target with a more ambitious 'go Dutch' scenario which is compatible with the APPCG's recommendation for modal shift, with cycling accounting for 25% of trips by 2050.
+
+# Method
+
+The method used in this research operates at the trip level. Joint variables between household, individual, trip and stage-level data allow individual-level attributes to be taken into account in the projections of modal shift, and also for the results to be presented at the level of stages, compatible with the DfT's target. It is important at the outset to clarify the difference between trips and stages: a trip is “a one-way course of travel with a single main pur- pose” [@Dft2011-notes], wheras a stage is a single leg of the journey made by a single mode. A typical example would be cycling to catch the train to work: a single trip composed of two stages. Although trips and stages are often used interchangeably (and 96% of trips in the National Travel Survey comprise of a single stage --- they *are* stages), it is worth understanding the distinction.
+
+The richest single source of multi-level transport data in the UK is the 2002--2008 National Travel Survey, which provides weekly travel information for 152,344 individuals, 130,585 (86%) of whom reside in England.
+The model is 'top-down' in the sense that the proportion of trips made by bicyle is determined by the scenarios of growth. It is 'bottom-up' in the sense that the nature of the trips and associate stages and people making them, is determined stochastically by the probability of any give trip switching to bike. At the core of the model is a set of assumptions about the factors affecting the probability of a trip being replaced by bicycle trip. The main factors we took into account (the first three of which were operationalised) are described below.
+
+## Distance
+
+## Mode
+
+## Age
+
+## Urban/rural home location
+
+## Socio-economic group
+
+
+# References

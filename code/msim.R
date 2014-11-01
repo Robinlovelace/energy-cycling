@@ -1,18 +1,28 @@
-# spatial microsimulation - allocation of individuals from the nts to las
-
+# The purpose of this file is to load the individual and trip-level data
 # Starting point - subset only those who travel to work - later allocate households/psuids they're in
 
 library(foreign) # loading package - may need install.packages("foreign")
 library(devtools)
 library(dplyr) # library for rapidly manipulating datasets
 
+psu <- as.data.frame(read.spss("/media/robin/SAMSUNG/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12/psu.sav"))
+psu <- rename(psu, gor = p2g, urbanity = p5a, popdens = p6)
+psu <- select(psu, h96, psuid, gor, urbanity, PSUPopulation, popdens, LAPopulation)
+
 indlst <- read.spss("/media/robin/SAMSUNG/data/DfT-NTS-2002-2008/UKDA-5340-spss/spss/spss12/individual.sav")
 ind <- as.data.frame(indlst)
+ind <- inner_join(ind, psu)
+
 ind <- tbl_df(ind)
 ind$i188 <- NULL
 ind
 ind <- rename(ind, yr = h96, house = h88, sex = i3, age = i6a, wplace = i92, employ = i177a, mode = i180, poss_home = i309, fhome = i310)
-ind <- select(ind, yr, psuid, house, i1, i2, sex, age, wplace, employ, mode, poss_home, fhome)
+ind <- select(ind, yr, psuid, house, i1, i2, sex, age, wplace, employ, mode, poss_home, fhome, gor, urbanity, PSUPopulation, popdens, LAPopulation)
+
+# which gors are people in? (filter out non English ones)
+(gorsum <- summary(ind$gor))
+sum(gorsum[!grepl("Wales|Scot", names(gorsum))])
+
 
 summary(ind$employ)
 indwrk <- filter(ind, grepl("time", employ)) # halves the size of ind - all in employment
@@ -33,7 +43,7 @@ ntstrips <- select(ntstrips, yr, psuid, house, i1, mode, stages, purp, dist, reg
 
 
 
-
+# spatial microsimulation - allocation of individuals from the nts to las - TODO
 commutes <- filter(ntstrips, purp == "Commuting") # all commuter trips
 per_person <- group_by(commutes, house, i1, psuid)
 
