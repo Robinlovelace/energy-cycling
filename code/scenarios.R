@@ -73,8 +73,8 @@ tsam$dkm <- conv_unit(tsam$dist / 10, mi, km)
 iac <- function(x, a = , b = ){
   a * exp(1)^(-b * x)
 }
-# plot(iac(1:10, 0.4, 0.3)) # test it makes sense
-pswitch <- iac(tsam$dkm, a = 0.3, b = 0.2)
+# plot(iac(1:10, 0.4, 0.2)) # test it makes sense
+pswitch <- iac(tsam$dkm, a = 0.4, b = 0.2)
 pswitch[ tsam$mode == "Bicycle"] <- 0 # probability of switch for cyclists = 0
 pswitch[ tsam$mode == "Walk"] <- 0 # probability of switch for walkers = 0
 # plot(pswitch, tsam$dkm)

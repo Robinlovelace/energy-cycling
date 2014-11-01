@@ -35,13 +35,38 @@ The model is 'top-down' in the sense that the proportion of trips made by bicyle
 
 ## Distance
 
+The most important determinant of whether a journey can be made by bicycle or not, in many cases, is distance. Due to limitations on average speed (~20 km/hr) and fitness, most stages of 10 km or more are deemed 'uncyclable' for most people. Averaged over all stages and contexts, 'cyclability' is not a binary variable, however: it is context-dependent. 
+
+```{r, echo=FALSE}
+# 388 bicycle trips of more than 20 km were recorded in the NTS
+```
+
+For the purposes of modelling, this means that the probability a stage in the current transport system being replace by bicycle is distance dependent. This can be represented by a *distance decay function*
+
+Based on GPS data, @Iacono2010 found that distance decay in cycling
+fits the following functional form:
+
+$$ p = \alpha \times e^{- \beta \times d} $$
+
+where $\alpha$ and $\beta$ are parameters representing the rate of cycling for the shortest distance and the rate of decay. These were set to 0.4 and 0.2 respectively, following [@Iacono2010].
+
 ## Mode
 
+Case studies on cycling uptake has found that where utility cycling does increase, it does not replace all other modes of transport uniformly. Walking and bus journeys have tended to be disproportionately replaced by cycling, whereas relatively few car trips have been replaced (). However, it is unclear the extent to which this mode-dependency is simply a knock-on impact of distance: to some extent the failure of bicycle trips to replace car trips could be explained by the tendency of car trips to be longer, and the fact that bus and walking modes are already quite common in urban centres where cycling has grown the most (). Moreover, the mode of travel bicycle trips tend to replace is highly policy dependent. To avoid double-counting the impact of distance, to maintain 'policy neutrality' and for simplicity, the probability of all trips were set the same, based on distance, except for cycling and walking. To prevent bicycle trips replacing existing bicycle trips, and to ensure walking remains constant in our scenarios, we set the probability of switching to cycling to zero for these modes.
+
 ## Age
+
+The age dependency...
+
+## Purpose
 
 ## Urban/rural home location
 
 ## Socio-economic group
+
+# Results
+
+# Conclusion
 
 
 # References
