@@ -65,7 +65,8 @@ points(myears$year, myears$cdp_pbike2, col = "red")
 points(myears$year, myears$perc_bike)
 
 # Baseline scenario: 0% growth from NTS 2008 - 2012 baseline
-(myears$ntm_perc_bike <-
+myears$ntm_perc_bike <- NA
+(myears$ntm_perc_bike[ myears$year > 2014] <-
     mean(myears$perc_bike[ myears$year > 2007 & myears$year < 2014]))
 
 # The 'Go Dutch' scenario

@@ -2,7 +2,11 @@
 title: "The benefits of getting England cycling"
 author: "Robin Lovelace and Fiona Crawford"
 date: "11/01/2014"
-output: word_document
+output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
 cls: /home/robin/Dropbox/Templates/citation-styles/elsevier-harvard.csl"
 bibliography: /home/robin/Documents/Transport.bib
 ---
@@ -27,6 +31,7 @@ sets out a more optimistic vision of cycling in England. Its target is to double
 here???].^[See the National Travel Survey's table 'NTS0304': https://www.gov.uk/government/statistical-data-sets/nts03-modal-comparisons
 ]
 Thus the Delivery Plan is for the cycling rate to constitute approximately 3% of trips by 2025, far short of the APPCG recommendations.
+
 The CDP also falls short in terms of funding. The recommendation of the All Party Parliamentary Cycling Group (APPCG) in the *Get Britain Cycling* (GBC) report was for a minimum of £10 per head to be invested in cycling, rising to £20 over time [@goodwin2013get]. The CDP merely states that this level will be
 'explored'.^["The Government's
 aspiration is that – working with local government, and businesses, we can together explore how we can achieve a minimum funding packet equivalent to £10 per person each year by 2020-21 – and sooner if possible" [@DepartmentforTransport2014, p. 33]. ]
@@ -45,7 +50,9 @@ $$nstage_{all} = stages/p/yr_{all} \times population $$
 
 where $pstage$ is the proportion of stages, $nstage$ is the total number of stages per year, $stages/p/yr$ is the number of stages made per person per year and the subscripts represent mode. Conversely, the total number of bicycle trips per year can be calculated my multiplying the National Transport Survey's stage-level results (15.290 stages per person per year in 2013) by the population of England (53.845 million in 2013), resulting in a total of 823.28 million $stages/p/yr$. This corresponds with the CDP's estimage of "0.8 billion" bicycle trips in 2013. Assuming linear growth in the number of trips per year to double this value in the intervening 12 years, the the average rate of growth will be an additional 68.61 million trips per year. Assuming population and the trip rate to stay constant, this would equate to 2.97% of stages being made by bicycle each year in 2025.
 
-However, due to increasing population and decreases in the overall number of stages being made (represented in figure 1), this value is an oversimplification. There has been a near continous downward trend in the number of stages made per person each year in England, falling from 1217 in 1995/97 to 1029 in 2013. Assuming this is just a temporary trend, the blue line in figure 1 shows zero change in the rate of travel. Based on the persistence and the close fit of the linear regression model, represented by the red line ($R^2 = 0.92$), one could also assume continued long-term declines in the number of trips. Whether the trend is driven by the recession, 'peak car' or changing social habits due to the internet, and whether this trend will continue, is open to debate [@Millard-Ball2010]. Whether the DfT expects the number of stages per person to continue to decline, stagnate around 1,000 stages per year or rebound is not clear from the CDP, making it unclear how to translate the absolute doubling target into an estimate of modal share by 2025.
+## Population growth and trip rates
+
+De to increasing population and decreases in the overall number of stages being made (represented in figure 1), this value is an oversimplification. There has been a near continous downward trend in the number of stages made per person each year in England, falling from 1217 in 1995/97 to 1029 in 2013. Assuming this is just a temporary trend, the blue line in figure 1 shows zero change in the rate of travel. Based on the persistence and the close fit of the linear regression model, represented by the red line ($R^2 = 0.92$), one could also assume continued long-term declines in the number of trips. Whether the trend is driven by the recession, 'peak car' or changing social habits due to the internet, and whether this trend will continue, is open to debate [@Millard-Ball2010]. Whether the DfT expects the number of stages per person to continue to decline, stagnate around 1,000 stages per year or rebound is not clear from the CDP, making it unclear how to translate the absolute doubling target into an estimate of modal share by 2025.
 
 ```{r, fig.cap="Assumed population growth (source: Office of National Statistics) and historic and projected changes in the number of stages per person per year (based on linear regression and a continuation of the 2013 value) in England.", echo=FALSE}
 library(grid)
@@ -53,16 +60,21 @@ library(png)
 grid.raster(readPNG("figures/pop-stages.png"))
 ```
 
-To allow room for both options, two scenarios of the cycling rate, according to the CDP target, were developed: one assuming constant 2013 numbers of stages and another assuming a continuation of the last 18 years of linear decline in the number of stages. Absolute numbers of bicycle stages will be lower under assumed mode share targets if the number of stages per person continues to decline. T
+To allow room for both options, two versions of the cycling rate, according to the CDP target, were developed: one assuming constant 2013 numbers of stages per person and another assuming a continuation of the last 18 years of linear decline in the number of stages. The modal split of trips is in fact less important than the overall number of trips in terms of calculating the benefits of cycling uptake (particularly in healt)
+
+Absolute numbers of bicycle stages will be lower under mode share targets if the number of stages per person continues to decline, relative to the (seemingly untenable) assumption of a continuation in current levels.
+
+To ensure that the benefits of high cycling uptake calculated in this report are conservative, we assume the overall number of stages per person per year stays constant to 2050 for the main results. Uncertainty regarding future trip rates is used in the sensitivity analysis.
 
 Although the GBC target used the proportion of *trips* (not stages) as the measure of success, it is reasonable to assume applies to stages. After all, the difference in the percentage of trips and stages made by bicycle is less than on hundredth of a percentage point in the latest (2002-2012) edition of the individual-level National Travel Survey.^[The proportion of stages made by bicycle was 1.713%. The proportion of trips made by bicycle was 1.719. It is surprising to note that a higher percentage of trips than stages were made by bicycle, although the difference is negligible.]
-It is also interesting to note that the same long-term trend of declining stages per person per year appears in the trip-level data, as illustrated in figure 2. This
+It is also interesting to note that the same long-term trend of declining stages per person per year appears in the trip-level data, [TODO:we could illustrate this in figure 2, or best leave for the appendix?]. This
 reinforces the argument that mode share targets are roughly interchangeable for stages and trips. Because the average stage distance is slightly shorter than the average trip distance, and for better compatibility with the CDP target, stage-level probabilities and targets were chosen.
 
+The resulting scenarios of the proportion of stages made by bicycle are represented in figure 3.^[The dataset that this graphic represents, along with all the code and example data for the analysis, is available online: https://github.com/Robinlovelace/energy-cycling/blob/master/output-data/scenarios2-just-scenarios.csv ]
 
-
-
-local area is on track to meet the 
+```{r, fig.cap="Projections of the cycling rate in England based on the National Transport Model (NTM), the Cycling Delivery Plan (CDP1 assumes constant trip rates, CDP2 assumes continued declines) and the Get Britain Cycling (GBC) report.", echo=FALSE, fig.width=12, fig.height=8}
+grid.raster(readPNG("figures/scenarios2.png"))
+```
 
 # Method 
 
@@ -93,7 +105,7 @@ fits the following functional form:
 
 $$ p = \alpha \times e^{- \beta \times d} $$
 
-where $\alpha$ and $\beta$ are parameters representing the rate of cycling for the shortest distance and the rate of decay. These were set to 0.4 and 0.2 respectively, following [@Iacono2010].
+where $\alpha$ and $\beta$ are parameters representing the rate of cycling for the shortest distance and the rate of decay. These were set to 0.4 and 0.2 respectively, following @Iacono2010.
 
 ### Mode
 
@@ -133,5 +145,16 @@ benefits of each scenario compared to the NTM baseline (financial in a bar chart
 
 # Conclusion
 
+# Appendices
+
+## Appendix 1: declining trip and stage rates per person
+
+It is interesting to note that the declines in stage rates presented in figure 1 are mirrored by declines in trips:
+
+```{r, fig.cap="Decline rates in the number of trips and stages per person per year, with projections of the future extrapolated from linear regression and the assumption of a continuation of the current rate.", echo=FALSE, fig.height=4, fig.width=3.5}
+grid.raster(readPNG("figures/trips-stages-decline.png"))
+```
+
+\clearpage
 
 # References
