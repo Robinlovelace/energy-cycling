@@ -1,10 +1,10 @@
 ---
 title: "The benefits of getting England cycling"
-author: "Fiona Crawford and Robin Lovelace"
+author: "Robin Lovelace and Fiona Crawford"
 date: "11/01/2014"
-output: pdf_document
-bibliography: /home/robin/Documents/Transport.bib
+output: word_document
 cls: /home/robin/Dropbox/Templates/citation-styles/elsevier-harvard.csl"
+bibliography: /home/robin/Documents/Transport.bib
 ---
 
 # Abstract
@@ -13,58 +13,123 @@ cls: /home/robin/Dropbox/Templates/citation-styles/elsevier-harvard.csl"
 
 # Introduction
 
-There is a growing body of evidence about the benefits of cycling. Human, environmental and economic health stand to benefit if more people choose to cycle for everyday transport. There is also recent evidence about the social and psychological benefits of regular excersise and being outside. Clearly such research can help inform policy at the national level: the measure selected to prot cycling and the scale and allocation of investment should build on a broad evidence base.
-Yet the majority of evidence on the effects of cycling operate at the local level, based on generally relatively small and localised samples, longitudinal studies and natural experiements.
-This report aims to 'scale up' the understanding gleaned from this rapid growing evidence base, to assess the likely impacts of a high cycling scenario in England.
+There is a growing body of evidence about the benefits of cycling. Human, environmental and economic health stand to benefit if more people choose to cycle for everyday transport. There is also recent evidence about the social and psychological benefits of regular exercise and spending time outdoors. Clearly such research can help inform policy at the national level: specific measures selected to promote active travel and the scale and allocation of investment should build on a broad evidence base. The majority of evidence on the effects of cycling relate, however, to the local level, from relatively small and localised samples, longitudinal studies and natural experiments. This report aims to 'scale up' the understanding gleaned from this rapid growing evidence base, to assess the likely benefits of high levels of cycling in England.
 
-Compared with other advanced economies, English cycling aspirations are low. While Scotland has set an ambitious target of 10% of trips to be made by bicycle in just 5 years, by 2020,^["By 2020,
+Compared with other advanced economies, English cycling aspirations are low. Whilst Scotland has an ambitious target of 10% of trips to be made by bicycle within just 5 years (by 2020),^["By 2020, 
 10% of all journeys taken in Scotland will be
-by bike" was the 'vision' set in the Cycling Action Plan for Scotland in 2010: http://www.scotland.gov.uk/resource/doc/316212/0100657.pdf . Since then campaigners have argued the target will not be met unless more funding is provided [@Horton2013]. ] 
-the Department for Transport has projected cycling to stagnate in its National Transport Model (NTM) [@Pank2013]. The recommendation of the All Party Parliamentary Cycling Group (APPCG) for a minimum of £10 per head to be invested in cycling [@goodwin2013get] has yet to materialise.
+by bike" was the 'vision' set in the Cycling Action Plan for Scotland in 2010: http://www.scotland.gov.uk/resource/doc/316212/0100657.pdf . Since then campaigners have argued the target will not be met unless more funding is provided [@Horton2013].
+] 
+the Department for Transport has projected cycling levels will stagnate based on its National Transport Model (NTM) [@Pank2013].
 
-The recently released draft Walking and Cycling Delivery Plan^[See https://www.gov.uk/government/consultations/cycling-delivery-plan-informal-consultation] sets out a more optimistic vision of cycling in England. Its target is to double the *absolute number* of bicycle stages by 2025, roughly equivalent to an 80% increase the *proportion* of transport trips made by cycling. The baseline figure for this target is the 2013 National Travel Survey, which recorded the lowest rate of cycling in Britain in its history: 15.3 stages per person per year, or 1.5% of stages [TODO: figure here???].^[See the National Travel Survey's table 'NTS0304': https://www.gov.uk/government/statistical-data-sets/nts03-modal-comparisons ] Thus the Cycling and Walking Delivery plan is for the cycling rate to constitute less than 3% of trips by 2025, far short of the APPCG recommendations.  
+The recently released draft Cycling Delivery
+Plan (CDP) [@DepartmentforTransport2014]^[See https://www.gov.uk/government/consultations/cycling-delivery-plan-informal-consultation]
+sets out a more optimistic vision of cycling in England. Its target is to double the *absolute number* of trip stages made bicycle by 2025. As we shall see, due to uncertainties in population growth and overall travel patterns, this does not necessarily mean doubling the *proportion* of stages made by bicycle. The baseline figure for the CDP target is the 2013 National Travel Survey [@DepartmentforTransport2014], which recorded the lowest rate of cycling in England to date: 15.3 stages per person per year, or 1.5% of stages [TODO: figure 
+here???].^[See the National Travel Survey's table 'NTS0304': https://www.gov.uk/government/statistical-data-sets/nts03-modal-comparisons
+]
+Thus the Delivery Plan is for the cycling rate to constitute approximately 3% of trips by 2025, far short of the APPCG recommendations.
+The CDP also falls short in terms of funding. The recommendation of the All Party Parliamentary Cycling Group (APPCG) in the *Get Britain Cycling* (GBC) report was for a minimum of £10 per head to be invested in cycling, rising to £20 over time [@goodwin2013get]. The CDP merely states that this level will be
+'explored'.^["The Government's
+aspiration is that – working with local government, and businesses, we can together explore how we can achieve a minimum funding packet equivalent to £10 per person each year by 2020-21 – and sooner if possible" [@DepartmentforTransport2014, p. 33]. ]
 
-The purpose of this report is to compare the benefits of the DfT's proposed cycling target with a more ambitious 'go Dutch' scenario which is compatible with the APPCG's recommendation for modal shift, with cycling accounting for 25% of trips by 2050.
+The purpose of this report is to compare the benefits of the DfT's proposed cycling target against a zero-growth baseline representing the 2013 National Transport Model and a more ambitious 'go Dutch' scenario which is compatible with the APPCG's recommendation for modal shift, with cycling accounting for 25% of trips by the middle of the century.
 
-# Method
+# Future scenarios of cycling in England
 
-The method used in this research operates at the trip level. Joint variables between household, individual, trip and stage-level data allow individual-level attributes to be taken into account in the projections of modal shift, and also for the results to be presented at the level of stages, compatible with the DfT's target. It is important at the outset to clarify the difference between trips and stages: a trip is “a one-way course of travel with a single main pur- pose” [@Dft2011-notes], wheras a stage is a single leg of the journey made by a single mode. A typical example would be cycling to catch the train to work: a single trip composed of two stages. Although trips and stages are often used interchangeably (and 96% of trips in the National Travel Survey comprise of a single stage --- they *are* stages), it is worth understanding the distinction.
+The targets proposed by the *Cycling Delivery Plan* and *Get Britain Ccycling* reports differ in the units of measure: CDP proposes a doubling in absolute numbers of bicycle stages (from 0.8 billion in 2013 to 1.6 billion in 2025), whereas the GBC targets relate to mode share: the *proportion* of trips made by bicycle (from around 2% now to 25% by mid-century). Clearly, from the perspective of monitoring and evaluation, it is easier to assess mode share than absolute number of bicycle trips. It may be difficult, for example, for a local authority to assess whether they are on track to help meet the "1.6 billion trips" target at the national level through a small survey. By contrast, a relatively simple travel survey can easily estimate mode share and whether or not it is in-line with the aspiration of a certain percentage of trips or stages to be made by bicycle. An additional issue with the absolute target of the CDP is that it is sensitive to assumptions about population growth and travel demand. Targets set in the unit of mode share are easier to understand and monitor, and are therefore used as the main measure of the rate of cycling in this report.
 
-The richest single source of multi-level transport data in the UK is the 2002--2008 National Travel Survey, which provides weekly travel information for 152,344 individuals, 130,585 (86%) of whom reside in England.
-The model is 'top-down' in the sense that the proportion of trips made by bicyle is determined by the scenarios of growth. It is 'bottom-up' in the sense that the nature of the trips and associate stages and people making them, is determined stochastically by the probability of any give trip switching to bike. At the core of the model is a set of assumptions about the factors affecting the probability of a trip being replaced by bicycle trip. The main factors we took into account (the first three of which were operationalised) are described below.
+To make the CDP target commensurate with the GBC targets, the CDP targets must be converted from billions of bicycle trips into modal share for cycling. To do this, the following equation was used and implemented on projections of population growth and the overall rate of travel:
 
-## Distance
+$$pstage_{cycle} = nstage_{cycle} / nstage_{all}$$
 
-The most important determinant of whether a journey can be made by bicycle or not, in many cases, is distance. Due to limitations on average speed (~20 km/hr) and fitness, most stages of 10 km or more are deemed 'uncyclable' for most people. Averaged over all stages and contexts, 'cyclability' is not a binary variable, however: it is context-dependent. 
+$$nstage_{all} = stages/p/yr_{all} \times population $$
+
+where $pstage$ is the proportion of stages, $nstage$ is the total number of stages per year, $stages/p/yr$ is the number of stages made per person per year and the subscripts represent mode. Conversely, the total number of bicycle trips per year can be calculated my multiplying the National Transport Survey's stage-level results (15.290 stages per person per year in 2013) by the population of England (53.845 million in 2013), resulting in a total of 823.28 million $stages/p/yr$. This corresponds with the CDP's estimage of "0.8 billion" bicycle trips in 2013. Assuming linear growth in the number of trips per year to double this value in the intervening 12 years, the the average rate of growth will be an additional 68.61 million trips per year. Assuming population and the trip rate to stay constant, this would equate to 2.97% of stages being made by bicycle each year in 2025.
+
+However, due to increasing population and decreases in the overall number of stages being made (represented in figure 1), this value is an oversimplification. There has been a near continous downward trend in the number of stages made per person each year in England, falling from 1217 in 1995/97 to 1029 in 2013. Assuming this is just a temporary trend, the blue line in figure 1 shows zero change in the rate of travel. Based on the persistence and the close fit of the linear regression model, represented by the red line ($R^2 = 0.92$), one could also assume continued long-term declines in the number of trips. Whether the trend is driven by the recession, 'peak car' or changing social habits due to the internet, and whether this trend will continue, is open to debate [@Millard-Ball2010]. Whether the DfT expects the number of stages per person to continue to decline, stagnate around 1,000 stages per year or rebound is not clear from the CDP, making it unclear how to translate the absolute doubling target into an estimate of modal share by 2025.
+
+```{r, fig.cap="Assumed population growth (source: Office of National Statistics) and historic and projected changes in the number of stages per person per year (based on linear regression and a continuation of the 2013 value) in England.", echo=FALSE}
+library(grid)
+library(png)
+grid.raster(readPNG("figures/pop-stages.png"))
+```
+
+To allow room for both options, two scenarios of the cycling rate, according to the CDP target, were developed: one assuming constant 2013 numbers of stages and another assuming a continuation of the last 18 years of linear decline in the number of stages. Absolute numbers of bicycle stages will be lower under assumed mode share targets if the number of stages per person continues to decline. T
+
+Although the GBC target used the proportion of *trips* (not stages) as the measure of success, it is reasonable to assume applies to stages. After all, the difference in the percentage of trips and stages made by bicycle is less than on hundredth of a percentage point in the latest (2002-2012) edition of the individual-level National Travel Survey.^[The proportion of stages made by bicycle was 1.713%. The proportion of trips made by bicycle was 1.719. It is surprising to note that a higher percentage of trips than stages were made by bicycle, although the difference is negligible.]
+It is also interesting to note that the same long-term trend of declining stages per person per year appears in the trip-level data, as illustrated in figure 2. This
+reinforces the argument that mode share targets are roughly interchangeable for stages and trips. Because the average stage distance is slightly shorter than the average trip distance, and for better compatibility with the CDP target, stage-level probabilities and targets were chosen.
+
+
+
+
+local area is on track to meet the 
+
+# Method 
+
+The method consists of two stages:
+
+1. The generation of a simulated population of cycle trips representing the achievement of the CDP and GBC (long-term) targets.
+2. The calculation of economic benefits associated with each scenario, compared with a baseline of no growth in cycling, representing the Department for Transport's NTM.
+
+## Modelling the increase in cycle trips
+
+The method used in this research operates at the trip level. Matching variables between household, individual, trip and stage-level data allow individual-level attributes to be taken into account in the projections of modal shift, and also for the results to be presented at the level of stages, compatible with the DfT's target. It is important at the outset to clarify the difference between trips and stages: a trip is “a one-way course of travel with a single main purpose”^[See the *National Travel Survey: 2010 Notes and Definitions*: https://www.gov.uk/government/statistics/national-travel-survey-2010], whereas a stage is a single leg of the journey made by a single mode. A typical example would be cycling to catch the train to work: a single trip composed of two stages. Although trips and stages are often used interchangeably (and 96% of trips in the National Travel Survey comprise of a single stage --- they *are* stages), it is worth understanding the distinction.
+
+The richest single source of multi-level transport data in the UK is the 2002--2012 National Travel Survey^[Available at http://discover.ukdataservice.ac.uk/catalogue/?sn=5340&type=Data%20catalogue ], which provides weekly travel information for xxx individuals, 86% of whom reside in England.
+The model is 'top-down' in the sense that the proportion of trips made by bicycle is determined by the scenarios described in the previous section. The nature of the trips and associate stages and people making them, however, are determined stochastically using the probability of any given trip switching to bike. At the core of the model is a set of assumptions about the factors affecting the probability of a stage being replaced by a bicycle stage. The main factors affecting the probability of switching to cycling are described below.
+
+### Distance
+
+The most important determinant of whether a journey can be made by bicycle or not, in many cases, is distance. Due to time and fitness constraints, most stages of 10 km or more are deemed 'uncyclable' for most people. Averaged over all stages and contexts, 'cyclability' is not a binary variable, however: it is context-dependent. 
 
 ```{r, echo=FALSE}
 # 388 bicycle trips of more than 20 km were recorded in the NTS
 ```
 
-For the purposes of modelling, this means that the probability a stage in the current transport system being replace by bicycle is distance dependent. This can be represented by a *distance decay function*
+For the purposes of modelling, this means that the probability of a stage in the current transport system being replace by bicycle is distance dependent. This can be represented by a *distance decay function*
 
-Based on GPS data, @Iacono2010 found that distance decay in cycling
+Based on household survey data, @Iacono2010 found that distance decay in cycling
 fits the following functional form:
 
 $$ p = \alpha \times e^{- \beta \times d} $$
 
 where $\alpha$ and $\beta$ are parameters representing the rate of cycling for the shortest distance and the rate of decay. These were set to 0.4 and 0.2 respectively, following [@Iacono2010].
 
-## Mode
+### Mode
 
-Case studies on cycling uptake has found that where utility cycling does increase, it does not replace all other modes of transport uniformly. Walking and bus journeys have tended to be disproportionately replaced by cycling, whereas relatively few car trips have been replaced (). However, it is unclear the extent to which this mode-dependency is simply a knock-on impact of distance: to some extent the failure of bicycle trips to replace car trips could be explained by the tendency of car trips to be longer, and the fact that bus and walking modes are already quite common in urban centres where cycling has grown the most (). Moreover, the mode of travel bicycle trips tend to replace is highly policy dependent. To avoid double-counting the impact of distance, to maintain 'policy neutrality' and for simplicity, the probability of all trips were set the same, based on distance, except for cycling and walking. To prevent bicycle trips replacing existing bicycle trips, and to ensure walking remains constant in our scenarios, we set the probability of switching to cycling to zero for these modes.
+Case studies on cycling uptake has found that where utility cycling does increase, it does not replace all other modes of transport uniformly. Walking and bus journeys have tended to be disproportionately replaced by cycling, whereas relatively few car trips have been replaced (). However, it is unclear the extent to which this mode-dependency is simply a knock-on impact of distance: to some extent the failure of bicycle trips to replace car trips could be explained by the tendency of car trips to be longer, and the fact that bus and walking modes are already quite common in urban centres where cycling has grown the most (). Moreover, the mode of travel bicycle trips tend to replace is highly policy dependent. To avoid double-counting the impact of distance, to maintain 'policy neutrality' and for simplicity, the probability of switching to cycling was set the same for trips of all modes for any given distance. The exception to this was cycling and walking. To prevent bicycle trips replacing existing bicycle trips, and to ensure walking remains constant in our scenarios, we set the probability of switching to cycling to zero for these modes.
 
-## Age
+### Age
 
-The age dependency...
+The probability of switching to cycling for a trip is not only determined by the trip distance.  Factors which affect this probability could relate to the individual making the trip (for example due to their age or a disability) or to the trip itself (for example the need to transport a heavy item).  
+Although some research into cycling has focused only on adults below 65 (), there is evidence suggesting that older people do cycle, although the probabilities are much lower ().  For the purposes of this model, the adjustments in Table 1 have been applied as multiplying factors to the probabilities of switching to cycling, for those in older age groups.
 
-## Purpose
+|Age group |  Probability multiplier |
+----| ----------------
+|0-59	| 1|
+|60-69|	0.666|
+|70-79|	0.5|
+|80+  |	0.2|
 
-## Urban/rural home location
+Prior to applying any of the probabilities described above, the model ensures that a random selection of 20% of trips have a zero probabilities of switching to be a cycling trip.  This is done in order to represent trips which could not physically be undertaken by bicycle (for reasons other than distance), and trips made by individuals who would never cycle, no matter what cycle facilities are available.
 
-## Socio-economic group
+### Purpose
+
+### Urban/rural home location
+
+### Socio-economic group
+
+## Calculating the economic benefits
+
+### Health and absenteeism 
+### Amenity
+### Car km related (decongestion, emissions etc.)
+### Road safety
+### Wider economic benefits
 
 # Results
+
+benefits of each scenario compared to the NTM baseline (financial in a bar chart with bar for each scenario, others in text e.g. tonnes of CO2?)
 
 # Conclusion
 

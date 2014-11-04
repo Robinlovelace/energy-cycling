@@ -41,7 +41,10 @@ ntstrips <- select(ntstrips, yr, psuid, house, i1, mode, stages, purp, dist, reg
 
 
 
-
+# ntspuid
+ntspuid <- as.data.frame(read.spss("/media/robin/SAMSUNG/data/UKDA-5340-spss/spss/spss19//psu.sav"))
+head(ntspuid)
+summary(ntspuid$h96)
 
 # spatial microsimulation - allocation of individuals from the nts to las - TODO
 commutes <- filter(ntstrips, purp == "Commuting") # all commuter trips
