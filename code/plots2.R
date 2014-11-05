@@ -14,9 +14,10 @@ myears_plot <- gather(myears_plot, Scenario, value = Percentage, -year)
 # write.csv(myears_plot, "output-data/scenarios2-just-scenarios.csv")
 head(myears_plot)
 
-ggplot() + geom_vline(xintercept = c(2025, 2050), linetype = 3) + geom_hline(yintercept = c(0.10, 0.25), linetype = 2) + geom_line(data = myears_plot, aes(x = year, y = Percentage, color = Scenario)) + ylab("Proportion of stages by bike") +  theme_bw() + scale_color_brewer(type = "qual", palette = 6, name = "Model") + geom_text(aes(x = c(2019, 2019), y = c(0.11, 0.24), label = c("GBC 2025", "GBC 2050")), size = 4) +
+ggplot() + geom_vline(xintercept = c(2025, 2050), linetype = 3) + geom_hline(yintercept = c(0.10, 0.25), linetype = 2) + geom_line(data = myears_plot, aes(x = year, y = Percentage, color = Scenario)) + ylab("Mode share bicycle (%)") +  theme_bw() + scale_color_brewer(type = "qual", palette = 6, name = "Model") + geom_text(aes(x = c(2019, 2019), y = c(0.11, 0.24), label = c("GBC 2025", "GBC 2050")), size = 4) +
   xlim(2013, 2051) +
-  scale_y_continuous(breaks = c(seq(0.01, 0.1, 0.01), seq(0.1, 0.25, 0.05)))
+  scale_y_continuous(breaks = c(seq(0.01, 0.09, 0.01), seq(0.1, 0.25, 0.05)),
+    labels = c(1:9, seq(10, 25, 5)))
 ggsave("figures/scenarios2.png", width = 7, height=5)
 
 # TODO: we could easily add historical data as points into this
